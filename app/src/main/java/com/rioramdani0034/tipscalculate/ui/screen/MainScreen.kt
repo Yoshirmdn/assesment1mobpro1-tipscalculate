@@ -2,12 +2,14 @@ package com.rioramdani0034.tipscalculate.ui.screen
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -34,9 +36,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -109,119 +112,143 @@ fun TipsCalculating() {
     var selectedTipOption by rememberSaveable { mutableStateOf(tipOptions[0]) }
     val context = LocalContext.current
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        Text("Tip Calculator", style = MaterialTheme.typography.headlineMedium)
-
-        OutlinedTextField(
-            value = nominalBayar,
-            onValueChange = { nominalBayar = it },
-            label = { Text(text = stringResource(R.string.bill_amount)) },
-            supportingText = { ErrorHint(nominalBayarError) },
-            isError = nominalBayarError,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            singleLine = true,
-            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+        Image(
+            painter = painterResource(id = R.drawable.telyu),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            alpha = 0.8f,
+            modifier = Modifier.matchParentSize()
         )
 
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
+                .fillMaxSize()
+                .padding(16.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                "Tip Calculator",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
             OutlinedTextField(
-                value = selectedTipOption,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text(text = stringResource(R.string.tip_percent)) },
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                },
+                value = nominalBayar,
+                onValueChange = { nominalBayar = it },
+                label = { Text(text = stringResource(R.string.bill_amount)) },
+                supportingText = { ErrorHint(nominalBayarError) },
+                isError = nominalBayarError,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
                 modifier = Modifier
-                    .menuAnchor()
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 singleLine = true,
                 colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
             )
 
-            ExposedDropdownMenu(
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = { expanded = !expanded },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
             ) {
-                tipOptions.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            selectedTipOption = option
-                            expanded = false
-                        },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                    )
+                OutlinedTextField(
+                    value = selectedTipOption,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(text = stringResource(R.string.tip_percent)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
+                    singleLine = true,
+                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    tipOptions.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                selectedTipOption = option
+                                expanded = false
+                            },
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                        )
+                    }
                 }
             }
-        }
 
-        Button(
-            onClick = {
-                nominalBayarError = nominalBayar.trim().isEmpty() ||
-                        nominalBayar.toDoubleOrNull() == null ||
-                        nominalBayar.toDouble() <= 0
+            Button(
+                onClick = {
+                    nominalBayarError = nominalBayar.trim().isEmpty() ||
+                            nominalBayar.toDoubleOrNull() == null ||
+                            nominalBayar.toDouble() <= 0
 
-                if (!nominalBayarError) {
-                    totalBayar = calculateTotal(nominalBayar, selectedTipOption)
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            Text(text = stringResource(R.string.calculate))
-        }
+                    if (!nominalBayarError) {
+                        totalBayar = calculateTotal(nominalBayar, selectedTipOption)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.calculate))
+            }
 
-        Button(
-            onClick = {
-                nominalBayar = ""
-                totalBayar = 0.0
-                nominalBayarError = false
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            Text(text = stringResource(R.string.reset))
-        }
+            Button(
+                onClick = {
+                    nominalBayar = ""
+                    totalBayar = 0.0
+                    nominalBayarError = false
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.reset))
+            }
 
-        Text(
-            text = "${stringResource(R.string.total_to_pay)}: Rp ${"%.2f".format(totalBayar)}",
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        Button(
-            onClick = {
-                shareData(
-                    context = context,
-                    message = context.getString(
-                        R.string.share_template, nominalBayar, selectedTipOption, totalBayar
+            Text(
+                text = "${stringResource(R.string.total_to_pay)}: Rp ${"%.2f".format(totalBayar)}",
+                modifier = Modifier.padding(top = 16.dp),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = context.getString(
+                            R.string.share_template, nominalBayar, selectedTipOption, totalBayar
+                        )
                     )
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            Text(text = stringResource(R.string.share))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.share))
+            }
         }
     }
 }
