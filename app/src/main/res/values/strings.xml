@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">tipscalculate</string>
+    <string name="app_name">Tips Calculate</string>
+    <!--  Main Screen  -->
+    <string name="main_title">Tips Calculator</string>
+    <string name="bill_amount">Bill Amount</string>
+    <string name="tip_percent">Tip Percent</string>
+    <string name="total_to_pay">Total to Pay</string>
+    <string name="calculate">Calculate</string>
+    <string name="reset">Reset</string>
+    <string name="share">Share</string>
+    <string name="home">Home</string>
+    <string name="info">Info</string>
+    <!--  About Screen  -->
+    <!--String About-->
+    <string name="back">Back</string>
+    <string name="about_app">About App</string>
+    <string name="copyright">
+        \n\nCopyright © 2024-2025 Rio Ramdani. All rights reserved.
+    </string>
 </resources>
