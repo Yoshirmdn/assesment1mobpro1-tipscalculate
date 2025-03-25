@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Perhitungan Untuk Tip</string>
+    <string name="main_title">Kalkulator Tip</string>
+    <string name="bill_amount">Jumlah Tagihan</string>
+    <string name="tip_percent">Persentase Tip</string>
+    <string name="total_to_pay">Total Bayar</string>
+    <string name="calculate">Hitung</string>
+    <string name="reset">Reset</string>
+    <string name="share">Bagikan</string>
+    <string name="share_template">Jumlah Tagihan: Rp.%1$s Persentase Tip: %2$s Total yang Harus Dibayar: Rp.%3$.2f</string>
+    <string name="home">Rumah</string>
+    <string name="info">Informasi</string>
+    <string name="input_invalid">Field Tidak boleh kosong</string>
+    <string name="back">Kembali</string>
+    <string name="about_app">Tentang Aplikasi</string>
+    <string name="copyright">Tip Calculator merupakan aplikasi yang dirancang untuk membantu pengguna menghitung total pembayaran termasuk biaya layanan atau tip dengan cepat dan akurat. Aplikasi ini sangat berguna dalam berbagai situasi, seperti makan di restoran, memesan layanan transportasi, atau memberi tip kepada pekerja layanan lainnya. Dengan menggunakan aplikasi ini, pengguna tidak perlu menghitung tip secara manual, sehingga terhindar dari kesalahan perhitungan yang tidak disengaja.\n\nHak Cipta © 2024-2025 Rio Ramdani. Seluruh hak cipta dilindungi undang-undang.</string>
+</resources>
