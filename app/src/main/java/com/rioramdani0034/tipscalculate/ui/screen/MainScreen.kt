@@ -1,5 +1,7 @@
 package com.rioramdani0034.tipscalculate.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -104,6 +107,7 @@ fun TipsCalculating() {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val tipOptions = listOf("10%", "20%", "25%", "50%")
     var selectedTipOption by rememberSaveable { mutableStateOf(tipOptions[0]) }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -205,7 +209,14 @@ fun TipsCalculating() {
             modifier = Modifier.padding(top = 16.dp)
         )
         Button(
-            onClick = {},
+            onClick = {
+                shareData(
+                    context = context,
+                    message = context.getString(
+                        R.string.share_template, nominalBayar, selectedTipOption, totalBayar
+                    )
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
@@ -228,5 +239,15 @@ fun ErrorHint(isError: Boolean) {
             text = stringResource(R.string.input_invalid),
             color = MaterialTheme.colorScheme.error
         )
+    }
+}
+
+private fun shareData(context: Context, message : String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager)!= null){
+        context.startActivity(shareIntent)
     }
 }

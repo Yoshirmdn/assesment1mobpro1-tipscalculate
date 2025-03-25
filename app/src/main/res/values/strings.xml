@@ -8,6 +8,7 @@
     <string name="calculate">Calculate</string>
     <string name="reset">Reset</string>
     <string name="share">Share</string>
+    <string name="share_template">Bill Amount: Rp.%1$s\nTip Percent: %2$s\nTotal to Pay: Rp.%3$.2f</string>
     <string name="home">Home</string>
     <string name="info">Info</string>
     <string name="input_invalid">Field Cannot be empty</string>
