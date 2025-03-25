@@ -10,11 +10,18 @@
     <string name="share">Share</string>
     <string name="home">Home</string>
     <string name="info">Info</string>
+    <string name="input_invalid">Field Cannot be empty</string>
     <!--  About Screen  -->
     <!--String About-->
     <string name="back">Back</string>
     <string name="about_app">About App</string>
-    <string name="copyright">
+    <string name="copyright">Tip Calculator is an application designed to help users
+        calculate the total amount of payment including service charge
+        or tip quickly and accurately. This application is very useful
+        in various situations, such as eating at a restaurant, ordering
+        transportation services, or giving tips to other service workers.
+        By using this application, users do not need to calculate tips
+        manually, thus avoiding accidental miscalculations.
         \n\nCopyright © 2024-2025 Rio Ramdani. All rights reserved.
     </string>
 </resources>

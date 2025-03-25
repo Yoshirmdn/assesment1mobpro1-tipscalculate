@@ -28,7 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,11 +39,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.rioramdani0034.tipscalculate.R
+import com.rioramdani0034.tipscalculate.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
@@ -70,7 +72,9 @@ fun MainScreen() {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = {
+                        navController.navigate(Screen.About.route)
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.Info,
                             contentDescription = stringResource(R.string.info),
@@ -94,11 +98,12 @@ fun MainScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TipsCalculating() {
-    var nominalBayar by remember { mutableStateOf("") }
-    var totalBayar by remember { mutableDoubleStateOf(0.0) }
-    var expanded by remember { mutableStateOf(false) }
+    var nominalBayar by rememberSaveable { mutableStateOf("") }
+    var nominalBayarError by rememberSaveable { mutableStateOf(false) }
+    var totalBayar by rememberSaveable { mutableDoubleStateOf(0.0) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val tipOptions = listOf("10%", "20%", "25%", "50%")
-    var selectedTipOption by remember { mutableStateOf(tipOptions[0]) }
+    var selectedTipOption by rememberSaveable { mutableStateOf(tipOptions[0]) }
 
     Column(
         modifier = Modifier
@@ -113,6 +118,8 @@ fun TipsCalculating() {
             value = nominalBayar,
             onValueChange = { nominalBayar = it },
             label = { Text(text = stringResource(R.string.bill_amount)) },
+            supportingText = { ErrorHint(nominalBayarError) },
+            isError = nominalBayarError,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -165,7 +172,13 @@ fun TipsCalculating() {
 
         Button(
             onClick = {
-                totalBayar = calculateTotal(nominalBayar, selectedTipOption)
+                nominalBayarError = nominalBayar.trim().isEmpty() ||
+                        nominalBayar.toDoubleOrNull() == null ||
+                        nominalBayar.toDouble() <= 0
+
+                if (!nominalBayarError) {
+                    totalBayar = calculateTotal(nominalBayar, selectedTipOption)
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,6 +191,7 @@ fun TipsCalculating() {
             onClick = {
                 nominalBayar = ""
                 totalBayar = 0.0
+                nominalBayarError = false
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -205,4 +219,14 @@ fun calculateTotal(bill: String, tip: String): Double {
     val billValue = bill.toDoubleOrNull() ?: 0.0
     val tipPercentage = tip.replace("%", "").toDoubleOrNull() ?: 0.0
     return billValue + (billValue * tipPercentage / 100)
+}
+
+@Composable
+fun ErrorHint(isError: Boolean) {
+    if (isError){
+        Text(
+            text = stringResource(R.string.input_invalid),
+            color = MaterialTheme.colorScheme.error
+        )
+    }
 }
