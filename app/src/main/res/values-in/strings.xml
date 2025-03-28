@@ -8,7 +8,7 @@
     <string name="calculate">Hitung</string>
     <string name="reset">Reset</string>
     <string name="share">Bagikan</string>
-    <string name="share_template">Jumlah Tagihan: Rp.%1$s Persentase Tip: %2$s Total yang Harus Dibayar: Rp.%3$.2f</string>
+    <string name="share_template">Jumlah Tagihan: Rp.%1$s\n Persentase Tip: %2$s\n Total yang Harus Dibayar: Rp.%3$.2f</string>
     <string name="home">Rumah</string>
     <string name="info">Informasi</string>
     <string name="input_invalid">Field Tidak boleh kosong</string>

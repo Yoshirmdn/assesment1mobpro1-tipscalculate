@@ -8,7 +8,7 @@
     <string name="calculate">Calculate</string>
     <string name="reset">Reset</string>
     <string name="share">Share</string>
-    <string name="share_template">Bill Amount: Rp.%1$s Tip Percent: %2$s Total to Pay: Rp.%3$.2f</string>
+    <string name="share_template">Bill Amount: Rp.%1$s\nTip Percent: %2$s\nTotal to Pay: Rp.%3$.2f</string>
     <string name="home">Home</string>
     <string name="info">Info</string>
     <string name="input_invalid">Field Cannot be empty</string>
@@ -16,6 +16,5 @@
     <!--String About-->
     <string name="back">Back</string>
     <string name="about_app">About App</string>
-    <string name="copyright">"Tip Calculator is an application designed to help users calculate the total amount of payment including service charge or tip quickly and accurately. This application is very useful in various situations, such as eating at a restaurant, ordering transportation services, or giving tips to other service workers. By using this application, users do not need to calculate tips manually, thus avoiding accidental miscalculations.\n\n
-        Copyright © 2024–2025 Rio Ramdani. All rights reserved."</string>
+    <string name="copyright">"Tip Calculator is an application designed to help users calculate the total amount of payment including service charge or tip quickly and accurately. This application is very useful in various situations, such as eating at a restaurant, ordering transportation services, or giving tips to other service workers. By using this application, users do not need to calculate tips manually, thus avoiding accidental miscalculations.\n\nCopyright © 2024–2025 Rio Ramdani. All rights reserved."</string>
 </resources>
